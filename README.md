@@ -1,5 +1,63 @@
 # CODSOFT
-'''----------BASIC CALCULATOR PROGRAM----------'''
+''''__________TASK 1 - TO-DO LIST APPLICATION__________
+import tkinter as tk
+from tkinter import messagebox
+
+class ToDoList:
+    def __init__(self, root):
+        self.root = root
+        self.tasks = []
+        self.task_number = 0
+
+        self.task_entry = tk.Entry(root, width=50)
+        self.task_entry.pack()
+
+        self.add_button = tk.Button(root, text="Add Task", command=self.add_task)
+        self.add_button.pack()
+
+        self.tasks_frame = tk.Frame(root)
+        self.tasks_frame.pack()
+
+    def add_task(self):
+        task_description = self.task_entry.get()
+        if task_description:
+            self.tasks.append(task_description)
+            self.display_tasks()
+            self.task_entry.delete(0, tk.END)
+        else:
+            messagebox.showwarning("Warning", "Task description cannot be empty.")
+
+    def display_tasks(self):
+        for widget in self.tasks_frame.winfo_children():
+            widget.destroy()
+
+        for i, task in enumerate(self.tasks):
+            task_frame = tk.Frame(self.tasks_frame)
+            task_frame.pack(fill=tk.X)
+
+            tk.Label(task_frame, text=task).pack(side=tk.LEFT)
+            tk.Button(task_frame, text="Done", command=lambda task_number=i: self.mark_as_done(task_number)).pack(side=tk.RIGHT)
+            tk.Button(task_frame, text="Delete", command=lambda task_number=i: self.delete_task(task_number)).pack(side=tk.RIGHT)
+
+    def mark_as_done(self, task_number):
+        self.tasks[task_number] = f"[Done] {self.tasks[task_number]}"
+        self.display_tasks()
+
+    def delete_task(self, task_number):
+        del self.tasks[task_number]
+        self.display_tasks()
+
+def main():
+    root = tk.Tk()
+    root.title("To-Do List")
+    todo = ToDoList(root)
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
+
+**************************************************************************************************************************************************************************
+'''______________TASK - 2 CALCULATOR PROGRAM______________'''
 def add(x,y):
     return x + y
 def subtract(x,y):
@@ -40,7 +98,20 @@ def main():
 if __name__ == "__main__":
     main()
 
+****************************************************************************************************************************************************************************
+'''__________________TASK - 3 PASSWORD GENERATOR__________________'''
+    import random
+import string
 
-'''--------------RANDOM PASSWORD GENERATOR---------------'''
-    
+length = int(input("Enter the length of the password: "))
+
+lower = string.ascii_lowercase
+upper = string.ascii_uppercase
+numbers = string.digits
+special = string.punctuation
+
+all_characters = lower + upper + numbers + special
+temp = random.sample(all_characters, length)
+password = "".join(random.sample(all_characters, length))
+print("Generated password:", password)
 
